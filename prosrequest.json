@@ -1,1801 +1,429 @@
 {
-	"definitions": {
-		"CarrierCode": {
-			"description": "IATA airline code, e.g. YY",
-			"type": "string",
-			"minLength": 2,
-			"maxLength": 2,
-			"pattern": "^[A-Z0-9]{2}"
-		},
-		"CityCode": {
-			"description": "City/Airport IATA code, e.g. LON",
-			"type": "string",
-			"minLength": 3,
-			"maxLength": 3,
-			"pattern": "^[A-Z]{3}"
-		},
-		"CurrencyCode": {
-			"description": "ISO currency code, e.g. USD",
-			"type": "string",
-			"minLength": 3,
-			"maxLength": 3,
-			"pattern": "^[A-Z]{3}"
-		},
-		"Date": {
-			"description": "Date specified as YYYY-MM-DD",
-			"type": "string",
-			"minLength": 10,
-			"maxLength": 10,
-			"pattern": "^[1-9][0-9]{3}-[0-1][0-9]-[0-3][0-9]"
-		},
-		"Time": {
-			"description": "Time specified as HH:MM:SS",
-			"type": "string",
-			"minLength": 8,
-			"maxLength": 8,
-			"pattern": "^[0-9]{2}:[0-9]{2}:[0-9]{2}"
-		},
-		"DateTime": {
-			"description": "DateTime specified as YYYY-MM-DDTHH:MM:SS",
-			"type": "string",
-			"minLength": 19,
-			"maxLength": 19,
-			"pattern": "^[1-9][0-9]{3}-[0-1][0-9]-[0-3][0-9]T[0-9]{2}:[0-9]{2}:[0-9]{2}"
-		},
-		"Equipment": {
-			"description": "Aircraft type",
-			"type": "string",
-			"minLength": 3,
-			"maxLength": 3,
-			"pattern": "^[0-9A-Z]{3}"
-		}
-	},
-	"type": "object",
-	"$schema": "http://json-schema.org/schema#",
-	"properties": {
-		"SearchRequest": {
-			"type": "object",
-			"required": [
-				"User",
-				"PassengerTypes",
-				"TripSegments"
-			],
-			"properties": {
-				"User": {
-					"type": "string"
-				},
-				"Password": {
-					"type": "string"
-				},
-				"ResponseType": {
-					"type": "string",
-					"enum": [
-						"json",
-						"xml",
-						"text",
-						"jsonv2"
-					]
-				},
-				"SessionId": {
-					"type": "string"
-				},
-				"ValidateRequest": {
-					"type": "boolean"
-				},
-				"DebugInfo": {
-					"type": "boolean"
-				},
-				"HealthCheck": {
-					"type": "boolean"
-				},
-				"HealthPassword": {
-					"type": "string"
-				},
-				"SFF": {
-					"type": "boolean"
-				},
-				"DebugMatrix": {
-					"type": "boolean"
-				},
-				"PassengerTypes": {
-					"type": "array",
-					"minItems": 1,
-					"uniqueItems": true,
-					"items": {
-						"type": "object",
-						"required": [
-							"TypeId",
-							"PaxType"
-						],
-						"properties": {
-							"TypeId": {
-								"type": "integer",
-								"minimum": 1
-							},
-							"PaxType": {
-								"type": "string",
-								"enum": [
-									"Adult",
-									"AccompaniedChild",
-									"UnaccompaniedChild",
-									"InfantWithSeat",
-									"InfantWithoutSeat",
-									"Youth",
-									"Student",
-									"Senior",
-									"Military",
-									"Seaman",
-									"AdultResident",
-									"AdultWithCompanion",
-									"AdultCompanion",
-									"Teacher",
-									"IndividualInclusiveTour",
-									"IndividualInclusiveTourChild",
-									"InclusiveTourInfantWithoutSeat",
-									"InclusiveTourInfantWithSeat",
-									"InclusiveTourYouth",
-									"LMG",
-									"ContractBulkAdult",
-									"ContractBulkChild",
-									"ContractBulkInfantWithoutSeat",
-									"ContractBulkInfantWithSeat",
-									"IncentiveCertAdult",
-									"IncentiveCertChild",
-									"IncentiveCertInfantWithoutSeat",
-									"STR",
-									"MAM",
-									"FFY",
-									"FFP",
-									"KNN",
-									"KIF",
-									"ZEA",
-									"ZEC",
-									"ZEI",
-									"ZEP",
-									"ZES",
-									"ZPA",
-                                					"GIT",
-									"GIY",
-									"GIS",
-									"GIF",
-									"PFA",
-									"PFN",
-									"PIF",
-									"SEC",
-									"SEF",
-									"MIS",
-									"MIC",
-									"MIF"
-								]
-							},
-							"DateOfBirth": {
-								"$ref": "#/definitions/DateTime"
-							},
-							"Baggage": {
-								"type": "array",
-								"items": {
-									"type": "object",
-									"required": ["Count"],
-									"properties": {
-										"Centimetres": {
-											"type": "number",
-											"minimum": 1
-										},
-										"Inches": {
-											"type": "number",
-											"minimum": 1
-										},
-										"Count": {
-											"type": "integer",
-											"minimum": 1
-										},
-										"Kilos": {
-											"type": "number",
-											"minimum": 1
-										},
-										"Pounds": {
-											"type": "number",
-											"minimum": 1
-										},
-										"Type": {
-											"type": "string",
-											"enum": [
-												"AlpinistEquipment",
-												"Bicycle",
-												"CanoeKayak",
-												"CampingEquipment",
-												"FishingEquipment",
-												"GolfEquipment",
-												"Paraglider",
-												"ScubaEquipment",
-												"Surfboard",
-												"SkiEquipment",
-												"SportingEquipment",
-												"StrollerPushchair",
-												"Snowboard",
-												"TennisEquipment",
-												"WindsurfEquipment"
-											]
-										}
-									}
-								}
-							},
-							"FFStatus": {
-								"type": "array",
-								"items": {
-									"type": "object",
-									"required": ["Carrier"],
-									"properties": {
-										"Carrier": {
-											"$ref": "#/definitions/CarrierCode"
-										},
-										"Status": {
-											"type": "number",
-											"minimum": 1,
-											"maximum": 9
-										},
-										"Miles": {
-											"type": "integer",
-											"minimum": 0
-										},
-										"TransferableMiles": {
-											"type": "integer",
-											"minimum": 0
-										}
-									}
-								}
-							},
-							"FormOfPayment": {
-								"type": "object",
-								"properties": {
-									"Card": {
-										"type": "array",
-										"maxItems": 1,
-										"items": {
-											"type": "object",
-											"required": ["CCCode"],
-											"properties": {
-												"BIN": {
-													"type": "string"
-												},
-												"CCCode": {
-													"type": "string",
-													"minLength": 2,
-													"maxLength": 2
-												}
-											}
-										}
-									}
-								}
-							},
-							"Service": {
-								"type": "array",
-								"items": {
-									"type": "object",
-									"required": ["Group"],
-									"properties": {
-										"Group": {
-											"type": "string",
-											"enum": [
-												"InFlightEntertainment",
-												"Lounge",
-												"Pets",
-												"MealBeverage",
-												"PreReservedSeatAssignment",
-												"Upgrades",
-												"RuleOverride",
-												"Store",
-												"TravelServices",
-												"Medical",
-												"GroundTransportation",
-												"BundledService",
-												"CarbonOffset",
-												"FrequentFlyer",
-												"Standby",
-												"UnaccompaniedTravelEscort",
-												"UnaccompaniedTravelUnescorted",
-												"BrandedFares"
-											]
-										},
-										"RequestSegment": {
-											"type": "array",
-											"items": {
-												"type": "integer"
-											}
-										},
-										"SubGroup": {
-											"type": "string",
-											"enum": [
-												"110VACPower",
-												"MediaDownload",
-												"FunPack",
-												"Headset",
-												"InternetAccess",
-												"LiveSatelliteTelevision",
-												"Movie",
-												"OverheadEntertainment",
-												"PhoneAccess",
-												"PersonalEntertainment",
-												"PillowBlanket",
-												"Toiletries",
-												"Television",
-												"USBPower",
-												"VideoGames",
-												"InCabin",
-												"InHold",
-												"Breakfast",
-												"Drink",
-												"Dinner",
-												"Lunch",
-												"Snack",
-												"Bassinet",
-												"Bulkhead",
-												"ExitRow",
-												"Sleeper",
-												"Mileage",
-												"LastMinute",
-												"MileageAccrual",
-												"Bus",
-												"CarRental",
-												"ElectricCart",
-												"Hotel",
-												"Limo",
-												"LandPackage",
-												"Parking",
-												"Transfer",
-												"Train",
-												"Tour",
-												"Incubator",
-												"MedicalAssistance",
-												"Oxygen",
-												"Stretcher",
-												"Wheelchair",
-												"Category31Override",
-												"Category33Override",
-												"Category31And33Override",
-												"Confirmed",
-												"Waitlist",
-												"Apparel",
-												"GiftCard",
-												"LogoMerchandise",
-												"Toys",
-												"BaggageInsurance",
-												"Charter",
-												"DelayedArrivalWarranty",
-												"DeniedBoardingCompensation",
-												"FastTrack",
-												"Group",
-												"LostTicket",
-												"NoShowFee",
-												"Prepaid",
-												"PremiumTripInsurance",
-												"PriorityCheckIn",
-												"PriorityBoarding",
-												"PriorityBaggage",
-												"RebookingWarranty",
-												"Security",
-												"TripInsurance",
-												"VisaServices",
-												"Warranty",
-												"UnaccompaniedMinor",
-												"Assistance",
-												"UnaccompaniedSenior"
-											]
-										}
-									}
-								}
-							},
-							"UserScoringSystem": {
-								"type": "object",
-								"properties": {
-									"IndexScore": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"required": ["Carrier", "Status"],
-											"properties": {
-												"Carrier": {
-													"$ref": "#/definitions/CarrierCode"
-												},
-												"Status": {
-													"type": "integer",
-													"minimum": 1
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				},
-				"Preferences": {
-					"type": "object",
-					"properties": {
-						"AllowAirportChanges": {
-							"type": "boolean"
-						},
-						"SplitTickets": {
-							"type": "object",
-							"properties": {
-								"AllowSplitTickets": {
-									"type": "boolean"
-								},
-								"SplitType": {
-									"type": "string",
-									"enum": [
-										"POT"
-									]
-								}
-							}
-						},
-						"AirlineBaggagePreference": {
-							"type": "object",
-							"properties": {
-								"OnlyFreeBag": {
-									"type": "array",
-									"items": {
-										"$ref": "#/definitions/CarrierCode"
-									}
-								},
-								"IncludeWithoutBag": {
-									"type": "array",
-									"items": {
-										"$ref": "#/definitions/CarrierCode"
-									}
-								}
-							}
-						},
-						"BrandedFares": {
-							"type": "object",
-							"required": ["BrandedFaresEnabled"],
-							"properties": {
-								"BrandedFaresEnabled": {
-									"type": "boolean"
-								},
-								"ReturnAllServices": {
-									"type": "boolean"
-								},
-								"IncludeUnbranded": {
-									"type": "boolean"
-								},
-								"IncludeBaggage": {
-									"type": "boolean"
-								},
-								"BrandableIndication": {
-									"type": "boolean"
-								},
-								"ReturnBrandFeatures": {
-									"type": "boolean"
-								}
-							}
-						},
-						"CheckAvailability": {
-							"type": "boolean"
-						},
-						"AllowWaitlist": {
-							"type": "boolean"
-						},
-						"LastSeatAvailability": {
-							"type": "boolean"
-						},
-						"ConnectionTimeMultiplier": {
-							"type": "number"
-						},
-						"DepartureTimeDiversity": {
-							"type": "number",
-							"minimum": 0,
-							"maximum": 1
-						},
-						"DisplayFareRules": {
-							"type": "string",
-							"enum": [
-								"None",
-								"PenaltiesOnly"
-							]
-						},
-						"Exclusions": {
-							"type": "object",
-							"properties": {
-								"Fare": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"properties": {
-											"Airline": {
-												"$ref": "#/definitions/CarrierCode"
-											},
-											"FareClass": {
-												"type": "string",
-												"minLength": 1
-											}
-										}
-									}
-								},
-								"FareRestrictions":{
-									"type": "object",
-									"properties": {
-										"NoMinStay": {"type": "boolean"},
-										"NoMaxStay": {"type": "boolean"},
-										"NoChangePenalty": {"type": "boolean"},
-										"NoRefundPenalty": {"type": "boolean"}
-									}
-								}
-							}
-						},
-						"GetAvailableSeats": {
-							"type": "boolean"
-						},
-						"MatrixSearch": {
-							"type": "object",
-							"required": ["UseMatrixSearch"],
-							"properties": {
-								"LengthOfStay": {
-									"type": "integer",
-									"minimum": 0
-								},
-								"ResultsPerBox": {
-									"type": "integer",
-									"minimum": 1
-								},
-								"UseMatrixSearch": {
-									"type": "boolean"
-								},
-								"FullResults": {
-									"type": "object",
-									"properties": {
-										"OutboundDate": {
-											"$ref": "#/definitions/Date"
-										},
-										"InboundDate": {
-											"$ref": "#/definitions/Date"
-										}
-									}
-								},
-								"IncludeBuckets": {
-									"type": "boolean"
-								},
-								"ApplyMatrixUserBuckets": {
-									"type": "boolean"
-								},
-								"MatrixType": {
-									"type": "string",
-									"enum": [
-										"FullCombination",
-										"CentralDatesCombination"
-									]
-								},
-								"LengthOfStayList": {
-									"type": "array",
-									"items": {
-										"type": "integer"
-									}
-								}
-							}
-						},
-						"MaxConnectionTime": {
-							"type": "integer",
-							"minimum": 1
-						},
-						"OptionalServices": {
-							"type": "boolean"
-						},
-						"OverrideSignificantSegment": {
-							"type": "boolean"
-						},
-						"PriceDiversity": {
-							"type": "object",
-							"required": ["TotalResults"],
-							"properties": {
-								"PricePoint": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"required": [
-											"Id",
-											"PriceRange",
-											"Results"
-										],
-										"properties": {
-											"Id": {
-												"type": "integer",
-												"minimum": 1
-											},
-											"PriceRange": {
-												"type": "number",
-												"minimum": 0
-											},
-											"Results": {
-												"type": "number",
-												"minimum": 0
-											}
-										}
-									}
-								},
-								"TotalResults": {
-									"type": "number",
-									"minimum": 1
-								}
-							}
-						},
-						"PriceModificationRules": {
-							"type": "array",
-							"items": {
-								"type": "object",
-								"required": ["PriceApplication", "PriceRange"],
-								"properties": {
-									"Airline": {
-										"type": "array",
-										"items": {
-											"$ref": "#/definitions/CarrierCode"
-										}
-									},
-									"DisplayPreference": {
-										"type": "object",
-										"properties": {
-											"Currency": {
-												"$ref": "#/definitions/CurrencyCode"
-											},
-											"MinBasePrice": {
-												"type": "number",
-												"minimum": 0
-											},
-											"UpdatePrice": {
-												"type": "boolean"
-											}
-										}
-									},
-									"FareType": {
-										"type": "array",
-										"items": {
-											"type": "string",
-											"enum": [
-												"Published",
-												"Private",
-												"FareByRule",
-												"Negotiated"
-											]
-										}
-									},
-									"Fare": {
-										"type": "object",
-										"properties": {
-											"FareClass": {
-												"type": "array",
-												"items": {
-													"type": "string",
-													"minLength": 1
-												}
-											},
-											"FareTypeCode": {
-												"type": "array",
-												"items": {
-													"type": "string",
-													"minLength": 1,
-													"maxLength": 3
-												}
-											},
-											"Footnote": {
-												"type": "array",
-												"items": {
-													"type": "string",
-													"minLength": 1,
-													"maxLength": 2
-												}
-											}
-										}
-									},
-									"PTC": {
-										"type": "array",
-										"items": {
-											"type": "string",
-											"minLength": 3,
-											"maxLength": 3,
-											"pattern": "[A-Z][A-Z][A-Z]"
-										}
-									},
-									"PriceApplication": {
-										"type": "string",
-										"enum": [
-											"MarkupBasePrice",
-											"MarkupTotalPrice",
-											"DiscountBasePrice",
-											"DiscountTotalPrice"
-										]
-									},
-									"PriceRange": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"Currency": {
-													"$ref": "#/definitions/CurrencyCode"
-												},
-												"Flat": {
-													"type": "number",
-													"minimum": 0
-												},
-												"Percent": {
-													"type": "number",
-													"minimum": 0
-												},
-												"RangeEnd": {
-													"type": "number",
-													"minimum": 1
-												},
-												"RangeStart": {
-													"type": "number",
-													"minimum": 0
-												},
-												"PaxRange": {
-													"type": "object",
-													"properties": {
-														"Min": {
-															"type": "number",
-															"minimum": 0
-														},
-														"Max": {
-															"type": "number",
-															"minimum": 0
-														}
-													}
-												}
-											}
-										}
-									},
-									"RBD": {
-										"type": "array",
-										"items": {
-											"minLength": 1,
-											"maxLength": 2
-										}
-									},
-									"MatchedPtcOccurrence": {
-										"type": "object",
-										"properties": {
-											"Min": {
-												"type": "number",
-												"minimum": 0
-											},
-											"Max": {
-												"type": "number",
-												"minimum": 0
-											}
-										}
-									},
-									"AccompanyingConditions": {
-										"type": "object",
-										"properties": {
-											"accompanyingPassengers": {
-												"type": "array",
-												"items": {
-													"type": "object",
-													"properties": {
-														"PassengerCodes": {
-															"type": "array",
-															"items": {
-																"type": "string",
-																"minLength": 3,
-																"maxLength": 3,
-																"pattern": "[A-Z][A-Z][A-Z]"
-															}
-														},
-														"MinOccurrence": {
-															"type": "number",
-															"minimum": 0
-														},
-														"MaxAccompaniedPassengers": {
-															"type": "number",
-															"minimum": 0
-														}
-													}
-												}
-											}
-										}
-									},
-									"ExactPTCMatch": {
-										"type": "boolean"
-									},
-									"TaxCalculation": {
-										"type": "string",
-										"enum": [
-											"NewPrice",
-											"OriginalPrice"
-										]
-									}
-								}
-							}
-						},
-						"RestrictFareTypes": {
-							"type": "string",
-							"enum": [
-								"None",
-								"Published",
-								"Lowcost",
-								"FBR"
-							]
-						},
-						"ResultsForEachSeller": {
-							"type": "boolean"
-						},
-						"ReturnEoESolutions": {
-							"type": "boolean"
-						},
-						"ReturnPriceDetails": {
-							"type": "object",
-							"properties": {
-								"AirportTaxPerCode": {
-									"type": "boolean"
-								},
-								"BasePriceSurcharges": {
-									"type": "boolean"
-								},
-								"PricePerSegment": {
-									"type": "boolean"
-								},
-								"AirportTaxPerFlight": {
-									"type": "boolean"
-								},
-								"FareCalculationLine": {
-									"type": "boolean"
-								},
-								"YqyrBreakdown": {
-									"type": "boolean"
-								},
-								"EquivalentBasePrice": {
-									"type": "boolean"
-								}
-							}
-						},
-						"SameCarrier": {
-							"type": "boolean"
-						},
-						"ShowChangeableFares": {
-							"type": "string",
-							"enum": [
-								"Any",
-								"True"
-							]
-						},
-						"ShowRefundableFares": {
-							"type": "string",
-							"enum": [
-								"Any",
-								"True"
-							]
-						},
-						"StreamResults": {
-							"type": "boolean"
-						},
-						"MaxResults": {
-							"type": "integer"
-						},
-						"MaxSearchTime": {
-							"type": "integer"
-						},
-						"ShowAllFlights": {
-							"type": "boolean"
-						},
-						"TicketingDate": {
-							"$ref": "#/definitions/DateTime"
-						},
-						"TransportationTypes": {
-							"type": "object",
-							"properties": {
-								"Air": {
-									"type": "boolean"
-								},
-								"Rail": {
-									"type": "boolean"
-								},
-								"Bus": {
-									"type": "boolean"
-								}
-							}
-						},
-						"UseMultiCabin": {
-							"type": "boolean"
-						},
-						"ValidatingCarrier": {
-							"$ref": "#/definitions/CarrierCode"
-						},
-						"IncludeServiceBookInfo": {
-							"type": "boolean"
-						},
-						"AwardFares": {
-							"type": "object",
-							"properties": {
-								"EnableAwardFares": {
-									"type": "boolean"
-								},
-								"OnlyAwardFares": {
-									"type": "boolean"
-								},
-								"IncludeMilesPlusCashFares": {
-									"type": "boolean"
-								}
-							}
-						},
-						"MaxPrice": {
-							"type": "object",
-							"required": [
-								"Total"
-							],
-							"properties": {
-								"Total": {
-									"type": "number"
-								},
-								"Base": {
-									"type": "number"
-								},
-								"Currency": {
-									"type": "string",
-									"minLength": 3,
-									"maxLength": 3
-								}
-							}
-						},
-						"ReturnTicketingInfo": {
-							"type": "boolean"
-						},
-						"ReturnFlightDetails": {
-							"type": "object",
-							"properties": {
-								"MealService": {
-									"type": "boolean"
-								},
-								"InFlightService": {
-									"type": "boolean"
-								},
-								"ETicketInfo": {
-									"type": "boolean"
-								},
-								"TrafficRestriction": {
-									"type": "boolean"
-								},
-								"PassengerCheckIn": {
-									"type": "boolean"
-								},
-								"OperatingAirlineDisclosure": {
-									"type": "boolean"
-								},
-								"LegalRestrictions": {
-									"type": "boolean"
-								},
-								"OperatingFlightNumber": {
-									"type": "boolean"
-								}
-							}
-						},
-						"PricingSolutionControls": {
-							"type": "object",
-							"properties": {
-								"UniqueRBDPerFlight": {
-									"type": "boolean"
-								},
-								"AllFaresPerFlight": {
-									"type": "boolean"
-								}
-							}
-						},
-						"DistributedAirlineProcessing": {
-							"type": "boolean"
-						},
-						"MixedCarrier": {
-							"type": "boolean"
-						},
-						"ExemptFees": {
-							"type": "object",
-							"properties": {
-								"Fees": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"required": [
-											"TaxCode"
-										],
-										"properties": {
-											"TaxCode": {
-												"type": "string",
-												"minLength": 2,
-												"maxLength": 2
-											},
-											"TaxType": {
-												"type": "string",
-												"minLength": 1,
-												"maxLength": 3
-											}
-										}
-									}
-								},
-								"CountryCodes": {
-									"type": "array",
-									"items": {
-										"type": "string",
-										"minLength": 2,
-										"maxLength": 2
-									}
-								}
-							}
-						},
-						"ReservationDate": {
-							"$ref": "#/definitions/Date"
-						}
-					}
-				},
-				"Channels": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"required": [
-							"Id",
-							"Provider"
-						],
-						"properties": {
-							"CrtAddress": {
-								"type": "string",
-								"minLength": 1,
-								"maxLength": 8
-							},
-							"DutyCode": {
-								"type": "string",
-								"minLength": 1,
-								"maxLength": 2
-							},
-							"Id": {
-								"type": "integer"
-							},
-							"PCC": {
-								"type": "string"
-							},
-							"Provider": {
-								"type": "string",
-								"enum": [
-									"Amadeus",
-									"WorldSpan",
-									"Galileo",
-									"Sabre",
-									"Apollo",
-									"DirectConnect",
-									"Pyton"
-								]
-							}
-						}
-					}
-				},
-				"Suppliers": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"required": [
-							"Id",
-							"PointOfSale",
-							"SearchRules"
-						],
-						"properties": {
-							"AccountCodes": {
-								"type": "array",
-								"items": {
-									"type": "string",
-									"minLength": 1,
-									"maxLength": 20
-								}
-							},
-							"AgencyID": {
-								"type": "string"
-							},
-							"AirlineSellerProperties": {
-								"type": "object",
-								"required": ["AirlineCode"],
-								"properties": {
-									"AirlineCode": {
-										"$ref": "#/definitions/CarrierCode"
-									},
-									"DepartmentId": {
-										"type": "string"
-									}
-								}
-							},
-							"CurrencyCode": {
-								"$ref": "#/definitions/CurrencyCode"
-							},
-							"DepartmentCodes": {
-								"type": "array",
-								"items": {
-									"type": "string",
-									"minLength": 1
-								}
-							},
-							"ErspNumber": {
-								"type": "string",
-								"minLength": 8,
-								"maxLength": 8
-							},
-							"IataNumber": {
-								"type": "string"
-							},
-							"Id": {
-								"type": "integer"
-							},
-							"Name": {
-								"type": "string"
-							},
-							"PointOfSale": {
-								"type": "string",
-								"minLength": 2,
-								"maxLength": 2,
-								"pattern": "[A-Z][A-Z]"
-							},
-							"SaleCity": {
-								"$ref": "#/definitions/CityCode"
-							},
-							"SearchRules": {
-								"type": "array",
-								"items": {
-									"type": "object",
-									"required": [
-										"Airline",
-										"ChannelID",
-										"FareType"
-									],
-									"properties": {
-										"Airline": {
-											"type": "array",
-											"items": {
-												"type": "string",
-												"minLength": 2,
-												"maxLength": 3
-											}
-										},
-										"ChannelID": {
-											"type": "integer"
-										},
-										"FareType": {
-											"type": "string",
-											"enum": [
-												"All",
-												"Published",
-												"Private",
-												"FareByRule",
-												"Negotiated",
-												"Lowcost"
-											]
-										},
-										"FareSubType": {
-											"type": "string",
-											"enum": [
-												"All",
-												"Regular",
-												"Flex",
-												"Inclusive",
-												"Basic",
-												"Plus",
-												"Max"
-											]
-										},
-										"RBD": {
-											"type": "array",
-											"items": {
-												"type": "string",
-												"minLength": 1,
-												"maxLength": 2
-											}
-										},
-										"ForceConnection": {
-											"type": "object",
-											"required": [
-												"Times"
-											],
-											"properties": {
-												"Times": {
-													"type": "object",
-													"properties": {
-														"USDomestic": {
-															"type": "integer",
-															"minimum": 1
-														},
-														"USCA": {
-															"type": "integer",
-															"minimum": 1
-														},
-														"International": {
-															"type": "integer",
-															"minimum": 1
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							},
-							"SellerType": {
-								"type": "string",
-								"enum": [
-									"WebSite",
-									"Airline"
-								]
-							}
-						}
-					}
-				},
-				"Sellers": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"required": ["Code"],
-						"properties": {
-							"AccountCodes": {
-								"type": "array",
-								"items": {
-									"type": "string",
-									"minLength": 1,
-									"maxLength": 20
-								}
-							},
-							"Code": {
-								"type": "string"
-							},
-							"CurrencyCode": {
-								"$ref": "#/definitions/CurrencyCode"
-							},
-							"SearchRules": {
-								"type": "array",
-								"items": {
-									"type": "object",
-									"required": [
-										"Airline",
-										"FareType"
-									],
-									"properties": {
-										"Airline": {
-											"type": "array",
-											"items": {
-												"type": "string",
-												"minLength": 2,
-												"maxLength": 3
-											}
-										},
-										"FareType": {
-											"type": "string",
-											"enum": [
-												"All",
-												"Published",
-												"Private",
-												"FareByRule",
-												"Negotiated",
-												"Lowcost"
-											]
-										},
-										"FareSubType": {
-											"type": "string",
-											"enum": [
-												"All",
-												"Regular",
-												"Flex",
-												"Inclusive",
-												"Basic",
-												"Plus",
-												"Max"
-											]
-										},
-										"RBD": {
-											"type": "array",
-											"items": {
-												"type": "string",
-												"minLength": 1,
-												"maxLength": 2
-											}
-										},
-										"ForceConnection": {
-											"type": "object",
-											"required": ["Times"],
-											"properties": {
-												"Times": {
-													"type": "object",
-													"properties": {
-														"USDomestic": {
-															"type": "integer",
-															"minimum": 1
-														},
-														"USCA": {
-															"type": "integer",
-															"minimum": 1
-														},
-														"International": {
-															"type": "integer",
-															"minimum": 1
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							},
-							"AgencyID": {
-								"type": "string"
-							},
-							"AirlineSellerProperties": {
-								"type": "object",
-								"required": ["AirlineCode"],
-								"properties": {
-									"AirlineCode": {
-										"$ref": "#/definitions/CarrierCode"
-									},
-									"DepartmentId": {
-										"type": "string"
-									}
-								}
-							},
-							"DepartmentCodes": {
-								"type": "array",
-								"items": {
-									"type": "string",
-									"minLength": 1
-								}
-							},
-							"ErspNumber": {
-								"type": "string",
-								"minLength": 8,
-								"maxLength": 8
-							},
-							"IataNumber": {
-								"type": "string"
-							},
-							"PointOfSale": {
-								"type": "string",
-								"minLength": 2,
-								"maxLength": 2,
-								"pattern": "[A-Z][A-Z]"
-							},
-							"SaleCity": {
-								"$ref": "#/definitions/CityCode"
-							},
-							"SellerType": {
-								"type": "string",
-								"enum": [
-									"WebSite",
-									"Airline"
-								]
-							},
-							"CrtAddress": {
-								"type": "string",
-								"minLength": 1,
-								"maxLength": 8
-							},
-							"DutyCode": {
-								"type": "string",
-								"minLength": 1,
-								"maxLength": 2
-							},
-							"PCC": {
-								"type": "string"
-							},
-							"Provider": {
-								"type": "string",
-								"enum": [
-									"Amadeus",
-									"WorldSpan",
-									"Galileo",
-									"Sabre",
-									"Apollo",
-									"DirectConnect",
-									"Pyton"
-								]
-							}
-						}
-					}
-				},
-				"TripSegments": {
-					"type": "array",
-					"minItems": 1,
-					"maxItems": 8,
-					"items": {
-						"type": "object",
-						"required": [
-							"Destination",
-							"Id",
-							"Origin",
-							"SegmentPassengers"
-						],
-						"properties": {
-							"ArrivalTime": {
-								"type": "object",
-								"properties": {
-									"EndTime": {
-										"$ref": "#/definitions/Time"
-									},
-									"StartTime": {
-										"$ref": "#/definitions/Time"
-									}
-								}
-							},
-							"DepartureDates": {
-								"type": "array",
-								"maxItems": 31,
-								"items": {
-									"type": "object",
-									"required": [
-										"Date"
-									],
-									"properties": {
-										"Date": {
-											"$ref": "#/definitions/Date"
-										},
-										"EndTime": {
-											"$ref": "#/definitions/Time"
-										},
-										"StartTime": {
-											"$ref": "#/definitions/Time"
-										},
-										"TimePreference": {
-											"type": "string",
-											"enum": [
-												"FirstAvailable",
-												"FirstIn",
-												"LastOut"
-											]
-										}
-									}
-								}
-							},
-							"Destination": {
-								"type": "array",
-								"minItems": 1,
-								"maxItems": 1,
-								"items": {
-									"$ref": "#/definitions/CityCode"
-								}
-							},
-							"DestinationPeference": {
-								"type": "object",
-								"properties": {
-									"AirportOnly": {
-										"type": "boolean"
-									}
-								}
-							},
-							"Id": {
-								"type": "integer",
-								"minimum": 1
-							},
-							"Origin": {
-								"type": "array",
-								"minItems": 1,
-								"maxItems": 1,
-								"items": {
-									"$ref": "#/definitions/CityCode"
-								}
-							},
-							"OriginPeference": {
-								"type": "object",
-								"properties": {
-									"AirportOnly": {
-										"type": "boolean"
-									}
-								}
-							},
-							"StayPeriod": {
-								"type": "object",
-								"properties": {
-									"MinDays": {
-										"type": "integer",
-										"minimum": 0
-									},
-									"MaxDays": {
-										"type": "integer",
-										"minimum": 0
-									}
-								}
-							},
-							"SegmentPassengers": {
-								"type": "object",
-								"required": [
-									"PassengerGroups"
-								],
-								"properties": {
-									"GroupsRelation": {
-										"type": "string",
-										"enum": [
-											"All",
-											"Alternative"
-										]
-									},
-									"PassengerGroups": {
-										"type": "array",
-										"minItems": 1,
-										"items": {
-											"type": "object",
-											"required": [
-												"Members"
-											],
-											"properties": {
-												"Members": {
-													"type": "array",
-													"minItems": 1,
-													"maxItems": 18,
-													"items": {
-														"type": "object",
-														"required": [
-															"Cabin",
-															"Id",
-															"TypeId"
-														],
-														"properties": {
-															"Cabin": {
-																"type": "string",
-																"enum": [
-																	"Any",
-																	"Economy",
-																	"PremiumEconomy",
-																	"Business",
-																	"First"
-																]
-															},
-															"Id": {
-																"type": "integer",
-																"minimum": 1
-															},
-															"TypeId": {
-																"type": "integer",
-																"minimum": 1
-															},
-															"ATPCOFareType": {
-																"type": "array",
-																"items": {
-																	"type": "string",
-																	"minLength": 2,
-																	"maxLength": 3
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							},
-							"SegmentPreferences": {
-								"type": "object",
-								"properties": {
-									"Airlines": {
-										"type": "object",
-										"properties": {
-											"Applicability": {
-												"type": "string",
-												"enum": [
-													"Preferred",
-													"Mandatory"
-												]
-											},
-											"Codes": {
-												"type": "array",
-												"items": {
-													"$ref": "#/definitions/CarrierCode"
-												}
-											}
-										},
-										"dependencies": {
-											"Codes": [
-												"Applicability"
-											]
-										}
-									},
-									"Brands": {
-										"type": "array",
-										"items": {
-											"type": "string",
-											"minLength": 1,
-											"maxLength": 30
-										}
-									},
-									"Connections": {
-										"type": "object",
-										"properties": {
-											"Applicability": {
-												"type": "string",
-												"enum": [
-													"Preferred",
-													"Mandatory"
-												]
-											},
-											"Number": {
-												"type": "integer",
-												"minimum": 0,
-												"maximum": 2
-											}
-										},
-										"dependencies": {
-											"Number": [
-												"Applicability"
-											]
-										}
-									},
-									"ExcludeAirlines": {
-										"type": "object",
-										"properties": {
-											"Codes": {
-												"type": "array",
-												"items": {
-													"$ref": "#/definitions/CarrierCode"
-												}
-											},
-											"Fares": {
-												"type": "boolean"
-											},
-											"Flights": {
-												"type": "boolean"
-											}
-										}
-									},
-									"FareBuckets": {
-										"type": "array",
-										"items": {
-											"type": "string"
-										}
-									},
-									"FlightAirlines": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"Codes": {
-													"type": "array",
-													"items": {
-														"$ref": "#/definitions/CarrierCode"
-													}
-												},
-												"Marketing": {
-													"type": "boolean"
-												},
-												"Operating": {
-													"type": "boolean"
-												},
-												"Paired": {
-													"type": "boolean"
-												},
-												"Scope": {
-													"type": "string",
-													"enum": [
-														"Blacklist",
-														"Whitelist"
-													]
-												},
-												"AtLeastOne": {
-													"type": "boolean"
-												}
-											}
-										}
-									},
-									"Flights": {
-										"type": "object",
-										"properties": {
-											"Combos": {
-												"type": "array",
-												"minItems": 1,
-												"items": {
-													"type": "object",
-													"properties": {
-														"Flight": {
-															"type": "array",
-															"minItems": 1,
-															"maxItems": 8,
-															"items": {
-																"type": "object",
-																"required": [
-																	"Carrier",
-																	"Date",
-																	"Destination",
-																	"FlightNumber",
-																	"Origin"
-																],
-																"properties": {
-																	"Available": {
-																		"type": "string"
-																	},
-																	"Carrier": {
-																		"$ref": "#/definitions/CarrierCode"
-																	},
-																	"Date": {
-																		"type": "string",
-																		"pattern": "^[1-9][0-9]{3}[0-1][0-9][0-3][0-9]"
-																	},
-																	"Destination": {
-																		"$ref": "#/definitions/CityCode"
-																	},
-																	"FlightNumber": {
-																		"type": "string",
-																		"minLength": 4,
-																		"maxLength": 4
-																	},
-																	"Origin": {
-																		"$ref": "#/definitions/CityCode"
-																	}
-																}
-															}
-														},
-														"Kind": {
-															"type": "string",
-															"enum": [
-																"Married",
-																"Single"
-															]
-														}
-													}
-												}
-											}
-										}
-									},
-									"Vias": {
-										"type": "array",
-										"minItems": 1,
-										"maxItems": 4,
-										"items": {
-											"type": "object",
-											"required": ["Location", "Occurrence"],
-											"properties": {
-												"Location": {
-													"type": "array",
-													"minItems": 1,
-													"items": {
-														"$ref": "#/definitions/CityCode"
-													}
-												},
-												"Occurrence": {
-													"type": "integer",
-													"minimum": 1,
-													"maximum": 4
-												}
-											}
-										}
-									},
-									"TimeBeforeNextDeparture": {
-										"type": "integer",
-										"minimum": 1
-									},
-									"MaxTravelDuration": {
-										"type": "object",
-										"properties": {
-											"Time": {
-												"type": "integer"
-											},
-											"FlyTimeOnly": {
-												"type": "boolean"
-											}
-										}
-									},
-									"EquipmentType": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"EQP": {
-													"type": "array",
-													"items": {
-														"$ref": "#/definitions/Equipment"
-													}
-												},
-												"Scope": {
-													"type": "string",
-													"enum": [
-														"Blacklist",
-														"Whitelist"
-													]
-												},
-												"AtLeastOne": {
-													"type": "boolean"
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+  "SearchRequest": {
+    "-ResponseType": "xml",
+    "-SessionID": "str123400000000000000000000000000000",
+    "-User": "str1234",
+    "-Password": "str1234",
+    "-EnableDebugInfo": "true",
+    "-ValidateRequest": "true",
+    "-SFF": "true",
+    "-DebugMatrix": "true",
+    "-HealthCheck": "true",
+    "-HealthPassword": "str1234",
+    "Itinerary": {
+      "Type": "RoundTrip",
+      "Passengers": {
+        "Passenger": {
+          "-PassengerID": "5",
+          "-PaxType": "Adult",
+          "-DateOfBirth": "2012-12-13T12:12:12",
+          "Baggage": {
+            "Piece": {
+              "-Count": "123",
+              "-Kilos": "5",
+              "-Pounds": "5",
+              "-Centimetres": "5",
+              "-Inches": "5",
+              "-Type": "AlpinistEquipment"
+            }
+          },
+          "Services": {
+            "Service": {
+              "-Group": "InFlightEntertainment",
+              "-SubGroup": "110VACPower",
+              "-RequestSegment": "str1234"
+            }
+          },
+          "FormOfPayment": {
+            "Card": {
+              "-BIN": "1234",
+              "-CCCode": "str1234"
+            }
+          },
+          "UserScoringSystem": {
+            "IndexScore": {
+              "-Carrier": "str1234",
+              "-Status": "123"
+            }
+          }
+        }
+      },
+      "PassengerTypes": {
+        "Passenger": {
+          "-TypeID": "5",
+          "-PaxType": "Adult",
+          "-DateOfBirth": "2012-12-13T12:12:12",
+          "Baggage": {
+            "Piece": {
+              "-Count": "123",
+              "-Kilos": "5",
+              "-Pounds": "5",
+              "-Centimetres": "5",
+              "-Inches": "5",
+              "-Type": "AlpinistEquipment"
+            }
+          },
+          "Services": {
+            "Service": {
+              "-Group": "InFlightEntertainment",
+              "-SubGroup": "110VACPower",
+              "-RequestSegment": "str1234"
+            }
+          },
+          "FormOfPayment": {
+            "Card": {
+              "-BIN": "1234",
+              "-CCCode": "str1234"
+            }
+          },
+          "UserScoringSystem": {
+            "IndexScore": {
+              "-Carrier": "str1234",
+              "-Status": "123"
+            }
+          }
+        }
+      },
+      "Segments": {
+        "FlightSegment": {
+          "-seqNumber": "1",
+          "PassengerReferences": {
+            "-GroupsRelation": "Alternative",
+            "PassengerReference": {
+              "-ID": "5",
+              "-Cabin": "str1234",
+              "-ThisCabinOnly": "true",
+              "-ATPCOFareType": "str1234"
+            },
+            "PassengerGroup": {
+              "Member": {
+                "-ID": "5",
+                "-TypeID": "5",
+                "-Cabin": "str1234",
+                "-ThisCabinOnly": "true",
+                "-ATPCOFareType": "str1234"
+              }
+            }
+          },
+          "Departure": {
+            "Cities": {
+              "City": {
+                "-City": "str",
+                "-State": "str",
+                "-Country": "str",
+                "-Region": "str",
+                "#text": "str1234"
+              }
+            },
+            "Dates": {
+              "-Contiguos": "true",
+              "DepartureDate": {
+                "-DirectionPreference": "None",
+                "-Applicability": "Default",
+                "DateTime": {
+                  "Date": "str1234",
+                  "Time": {
+                    "Start": "12:12:12",
+                    "End": "12:12:12"
+                  }
+                }
+              }
+            }
+          },
+          "Arrival": {
+            "Cities": {
+              "City": {
+                "-City": "str",
+                "-State": "str",
+                "-Country": "str",
+                "-Region": "str",
+                "#text": "str1234"
+              }
+            },
+            "ArrivalTime": {
+              "-Applicability": "Default",
+              "Time": {
+                "Start": "12:12:12",
+                "End": "12:12:12"
+              }
+            }
+          },
+          "SegmentPreferences": {
+            "Connections": {
+              "-Applicability": "Default",
+              "#text": "5"
+            },
+            "Airlines": {
+              "-Applicability": "Default",
+              "#text": "str1234"
+            },
+            "Flights": {
+              "-Applicability": "Mandatory",
+              "Combo": {
+                "-kind": "single",
+                "Flight": {
+                  "-Carrier": "str",
+                  "-FlightNumber": "str1",
+                  "-Date": "str12340",
+                  "-Origin": "str12",
+                  "-Destination": "str12",
+                  "Available": "str1234"
+                }
+              }
+            },
+            "ExcludeAirlines": {
+              "-Fares": "true",
+              "-Flights": "true",
+              "-PlatingCarrier": "true",
+              "#text": "str1234"
+            },
+            "FlightAirlines": {
+              "-Marketing": "true",
+              "-Operating": "true",
+              "-Scope": "Whitelist",
+              "-Paired": "true",
+              "-AtLeastOne": "true",
+              "#text": "str1234"
+            },
+            "Vias": {
+              "Via": {
+                "-Occurrence": "123",
+                "Location": "str"
+              }
+            },
+            "FareBuckets": { "FareBucket": "str1234" },
+            "Brands": { "BrandName": "str1234" },
+            "TimeBeforeNextDeparture": "123",
+            "MaxTravelDuration": {
+              "-FlyTimeOnly": "true",
+              "#text": "123"
+            },
+            "EquipmentType": {
+              "-Scope": "Whitelist",
+              "-AtLeastOne": "true",
+              "#text": "str1234"
+            }
+          },
+          "StayPeriod": {
+            "MinDays": "123",
+            "MaxDays": "123"
+          }
+        }
+      },
+      "Preferences": {
+        "DisplayFareRules": "None",
+        "RestrictFareTypes": "Published",
+        "ShowRefundableFares": "Any",
+        "ShowChangeableFares": "Any",
+        "AllowSplitTickets": {
+          "-SplitType": "POT",
+          "#text": "true"
+        },
+        "CheckAvailability": {
+          "-GetAvailableSeats": "true",
+          "-AllowWaitlist": "true",
+          "#text": "true"
+        },
+        "LastSeatAvailability": "true",
+        "MaxConnectionTime": "123",
+        "ConnectionTimeMultiplier": "3.14159",
+        "AllowAirportChanges": "true",
+        "ReturnEoESolutions": "true",
+        "UseMatrixSearch": {
+          "-LengthOfStay": "123",
+          "-ResultsPerBox": "123",
+          "-FullResultsOutboundDate": "2012-12-13",
+          "-FullResultsInboundDate": "2012-12-13",
+          "-IncludeBuckets": "true",
+          "-ApplyMatrixUserBuckets": "true",
+          "-MatrixType": "FullCombination",
+          "-LengthOfStayList": "str1234",
+          "#text": "true"
+        },
+        "ReturnPriceDetails": {
+          "PricePerSegment": "true",
+          "AirportTaxPerCode": "true",
+          "BasePriceSurcharges": "true",
+          "AirportTaxPerFlight": "true",
+          "FareCalculationLine": "true",
+          "YqyrBreakdown": "true",
+          "EquivalentBasePrice": "true"
+        },
+        "UseMultiCabin": "true",
+        "ValidatingCarrier": "str1234",
+        "OverrideSignificantSegment": "true",
+        "TicketingDate": "2012-12-13T12:12:12",
+        "Exclusions": {
+          "Fare": {
+            "-Airline": "str1234",
+            "-FareClass": "str1234"
+          },
+          "FareRestrictions": {
+            "NoMinStay": "true",
+            "NoMaxStay": "true",
+            "NoChangePenalty": "true",
+            "NoRefundPenalty": "true"
+          }
+        },
+        "OptionalServices": "true",
+        "StreamResults": "true",
+        "MaxResults": "123",
+        "MaxSearchTime": "123",
+        "ShowAllFlights": "true",
+        "DepartureTimeDiversity": "3.14159",
+        "ResultsForEachSeller": "true",
+        "SameCarrier": "true",
+        "PriceDiversity": {
+          "TotalResults": "123",
+          "PricePoint": {
+            "-id": "123",
+            "-PriceRange": "5",
+            "-Results": "5"
+          }
+        },
+        "BrandedFares": {
+          "-ReturnAllServices": "true",
+          "-IncludeUnbranded": "true",
+          "-IncludeBaggage": "true",
+          "-BrandableIndication": "true",
+          "-ReturnBrandFeatures": "true",
+          "#text": "true"
+        },
+        "AirlineBaggagePreference": {
+          "OnlyFreeBag": "str1234",
+          "IncludeWithoutBag": "str1234"
+        },
+        "TransportationTypes": {
+          "-Air": "true",
+          "-Rail": "true",
+          "-Bus": "true"
+        },
+        "IncludeServiceBookInfo": "true",
+        "AwardFares": {
+          "-OnlyAwardFares": "true",
+          "-IncludeMilesPlusCashFares": "true",
+          "#text": "true"
+        },
+        "MaxPrice": {
+          "-Base": "3.14159",
+          "-Currency": "str",
+          "#text": "3.14159"
+        },
+        "ReturnTicketingInfo": "true",
+        "ReturnFlightDetails": {
+          "MealService": "true",
+          "InFlightService": "true",
+          "ETicketInfo": "true",
+          "TrafficRestriction": "true",
+          "PassengerCheckIn": "true",
+          "OperatingAirlineDisclosure": "true",
+          "LegalRestrictions": "true",
+          "OperatingFlightNumber": "true"
+        },
+        "PricingSolutionControls": {
+          "UniqueRBDPerFlight": "true",
+          "AllFaresPerFlight": "true"
+        },
+        "DistributedAirlineProcessing": "true",
+        "MixedCarrier": "true",
+        "ExemptFees": {
+          "Fee": {
+            "TaxCode": {
+              "-CollectionPoint": "str",
+              "#text": "str1234"
+            },
+            "TaxType": "str"
+          },
+          "CountryCode": "st"
+        },
+        "ReservationDate": "2012-12-13"
+      },
+      "Channels": {
+        "Channel": {
+          "ID": "5",
+          "Provider": "str1234",
+          "PCC": "str1234",
+          "Username": "str1234",
+          "Password": "str1234",
+          "DutyCode": "st",
+          "CrtAddress": "str1234"
+        }
+      },
+      "Suppliers": {
+        "Supplier": {
+          "ID": "12",
+          "Name": "str1234",
+          "IataNumber": "123",
+          "AgencyID": "str1234",
+          "PointOfSale": "st",
+          "PrivateCodes": { "PrivateCode": "str1234" },
+          "AccountCodes": { "AccountCode": "str1234" },
+          "ErspNumber": "str12340",
+          "SaleCity": "str1234",
+          "DepartmentCode": "str1234",
+          "AirlineSellerProperties": {
+            "-AirlineCode": "st",
+            "-DepartmentId": "123"
+          },
+          "SellerType": "WebSite",
+          "Rules": {
+            "SearchRule": {
+              "FareType": "Published",
+              "Airline": "str1234",
+              "ChannelID": "5",
+              "Explicit": "true",
+              "RBD": "str1234",
+              "ForceConnection": {
+                "Times": {
+                  "-USDomestic": "123",
+                  "-USCA": "123",
+                  "-International": "123"
+                }
+              }
+            }
+          },
+          "BookingScope": "str1234",
+          "ApplyTicketMask": "true",
+          "CurrencyCode": "str"
+        }
+      },
+      "Async": { "-Forks": "5" },
+      "Sellers": {
+        "Seller": {
+          "Code": "str1234",
+          "AccountCodes": { "AccountCode": "str1234" },
+          "Rules": {
+            "SearchRule": {
+              "FareType": "Published",
+              "Airline": "str1234",
+              "RBD": "str1234",
+              "ForceConnection": {
+                "Times": {
+                  "-USDomestic": "123",
+                  "-USCA": "123",
+                  "-International": "123"
+                }
+              }
+            }
+          },
+          "CurrencyCode": "str",
+          "IataNumber": "123",
+          "AgencyID": "str1234",
+          "PointOfSale": "st",
+          "ErspNumber": "str12340",
+          "SaleCity": "str1234",
+          "DepartmentCode": "str1234",
+          "AirlineSellerProperties": {
+            "-AirlineCode": "st",
+            "-DepartmentId": "123"
+          },
+          "SellerType": "WebSite",
+          "Provider": "str1234",
+          "PCC": "str1234",
+          "DutyCode": "st",
+          "CrtAddress": "str1234"
+        }
+      }
+    }
+  }
 }
